@@ -150,7 +150,7 @@ class MidiInputHandler(object):
             raise IOError("Config file not found: %s" % filename)
 
         with open(filename) as patch:
-            data = yaml.load(patch)
+            data = yaml.load(patch, Loader=yaml.FullLoader)
 
         for cmdspec in data:
             try:
