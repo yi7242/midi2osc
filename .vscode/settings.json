@@ -56,6 +56,7 @@
         "mojo": "mojo run"
     },
     "code-runner.executorMapByFileExtension": {
+        
         ".vb": "cd $dir && vbc /nologo $fileName && $dir$fileNameWithoutExt",
         ".vbs": "cscript //Nologo",
         ".scala": "scala",
