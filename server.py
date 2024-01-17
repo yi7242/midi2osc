@@ -1,3 +1,4 @@
+# 参考: https://github.com/attwad/python-osc/blob/master/README.rst
 import argparse
 import math
 
@@ -21,6 +22,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     dispatcher = Dispatcher()
+    dispatcher.map("/midi*", print)
     dispatcher.map("/filter", print)
     dispatcher.map("/volume", print_volume_handler, "Volume")
     dispatcher.map("/logvolume", print_compute_handler, "Log volume", math.log)

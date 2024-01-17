@@ -7,11 +7,12 @@
 import sys
 import time
 
-import liblo
+# import liblo
 
 from rtmidi.midiconstants import NOTE_ON
 from rtmidi.midiutil import open_midiinput
 
+import sender, oscbuilder
 
 def midiin_callback(event, data=None):
     message, deltatime = event
@@ -19,11 +20,9 @@ def midiin_callback(event, data=None):
     if message[0] & 0xF0 == NOTE_ON:
         status, note, velocity = message
         channel = (status & 0xF) + 1
-        liblo.send(
-            ('localhost', 9001),
-            '/midi/%i/noteon' % channel,
-            note,
-            velocity)
+        msg = oscbuilder.OscBuilder('/midi/%i/noteon' % channel, note, velocity).build()
+        sender.send_udp('localhost', 9000, msg)
+        print(status, channel, note,velocity)
 
 
 try:
