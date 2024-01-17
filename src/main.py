@@ -17,7 +17,7 @@ def midiin_callback(event, data=None):
         channel = (status & 0xF) + 1
         msg = oscbuilder.OscBuilder('/midi/%i/noteon' % channel, note, velocity).build()
         sender.send_udp(IP, PORT, msg)
-        print(status, channel, note,velocity)
+        print(channel, note,velocity)
 
 
 try:
