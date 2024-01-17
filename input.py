@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-#
-# midiin_poll.py
-#
-"""Show how to receive MIDI input by polling an input port."""
-
 from __future__ import print_function
 
 import logging
