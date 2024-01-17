@@ -12,6 +12,7 @@ PORT = 9000
 def midiin_callback(event, data=None):
     message, deltatime = event
 
+    # 下1桁はチャンネル番号
     if message[0] & 0xF0 == NOTE_ON:
         status, note, velocity = message
         channel = (status & 0xF) + 1
