@@ -1,18 +1,13 @@
-#!/usr/bin/env python
-#
-# noteon2osc.py
-#
-"""Send an OSC message when a MIDI Note On message is received."""
-
 import sys
 import time
-
-# import liblo
 
 from rtmidi.midiconstants import NOTE_ON
 from rtmidi.midiutil import open_midiinput
 
 import sender, oscbuilder
+
+IP = "localhost"
+PORT = 9000
 
 def midiin_callback(event, data=None):
     message, deltatime = event
@@ -21,17 +16,14 @@ def midiin_callback(event, data=None):
         status, note, velocity = message
         channel = (status & 0xF) + 1
         msg = oscbuilder.OscBuilder('/midi/%i/noteon' % channel, note, velocity).build()
-        sender.send_udp('localhost', 9000, msg)
+        sender.send_udp(IP, PORT, msg)
         print(status, channel, note,velocity)
 
 
 try:
-    # Prompts user for MIDI input port, unless a valid port number or name
-    # is given as the first argument on the command line.
-    # API backend defaults to ALSA on Linux.
     port = sys.argv[1] if len(sys.argv) > 1 else None
 
-    with open_midiinput(port, client_name='noteon2osc')[0] as midiin:
+    with open_midiinput(port, client_name='midi2osc')[0] as midiin:
         midiin.set_callback(midiin_callback)
 
         while True:
