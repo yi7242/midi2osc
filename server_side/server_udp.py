@@ -8,7 +8,6 @@ PORT = 5005
 s = socket(AF_INET, SOCK_DGRAM)
 # バインドしておく
 s.bind((HOST, PORT))
-s.settimeout(0.2)
 try:
     while True:
         msg, address = s.recvfrom(8192)

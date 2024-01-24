@@ -4,12 +4,15 @@ import time
 from rtmidi.midiconstants import NOTE_ON
 from rtmidi.midiutil import open_midiinput
 
-import sender, oscbuilder
+import sender
+import oscbuilder
 from connection_mode import Connection_Mode
 
 IP = "localhost"
-PORT = 9000
-MODE = Connection_Mode.UDP
+PORT = 5005
+MODE = Connection_Mode.TCP
+s = None
+
 
 def midiin_callback(event, data=None):
     message, deltatime = event
@@ -18,14 +21,16 @@ def midiin_callback(event, data=None):
     if message[0] & 0xF0 == NOTE_ON:
         status, note, velocity = message
         channel = (status & 0xF) + 1
-        msg = oscbuilder.OscBuilder('/midi/noteon' ,channel, note, velocity).build()
-        sender.send_udp(IP, PORT, msg)
-        print(channel, note,velocity)
+        msg = oscbuilder.OscBuilder(
+            '/midi/noteon', channel, note, velocity).build()
+        s.send(msg)
+        print(channel, note, velocity)
 
 
 try:
     port = sys.argv[1] if len(sys.argv) > 1 else None
 
+    s = sender.Sender(IP, PORT, MODE)
     with open_midiinput(port, client_name='midi2osc')[0] as midiin:
         midiin.set_callback(midiin_callback)
 
