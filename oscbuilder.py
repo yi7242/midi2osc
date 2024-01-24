@@ -1,9 +1,11 @@
 import struct
 
+
 class OscBuilder:
     def __init__(self, addr, *args):
         self.addr = addr
         self.args = args
+
     def check_type(self, arg):
         if type(arg) == str:
             return 's'
@@ -13,10 +15,12 @@ class OscBuilder:
             return 'f'
         else:
             raise TypeError('Invalid type: ' + str(type(arg)))
+
     def write_string(self, string):
         return_bytes = string.encode('utf-8')
         return_bytes += b'\x00' * (4 - (len(return_bytes) % 4))
         return return_bytes
+
     def build(self):
         """
         OSCメッセージの作成

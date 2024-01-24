@@ -1,7 +1,8 @@
 # 参考: https://qiita.com/akakou/items/e9fbcfcc0c69cc957152e
 
-from socket import socket, AF_INET, SOCK_DGRAM,SOCK_STREAM, SOL_SOCKET, SO_BROADCAST
+from socket import socket, AF_INET, SOCK_DGRAM, SOCK_STREAM, SOL_SOCKET, SO_BROADCAST
 from connection_mode import Connection_Mode
+
 
 class Sender:
     def __init__(self, addr, port, mode):
