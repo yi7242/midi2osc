@@ -5,9 +5,11 @@ from rtmidi.midiconstants import NOTE_ON
 from rtmidi.midiutil import open_midiinput
 
 import sender, oscbuilder
+from connection_mode import Connection_Mode
 
 IP = "localhost"
 PORT = 9000
+MODE = Connection_Mode.UDP
 
 def midiin_callback(event, data=None):
     message, deltatime = event
