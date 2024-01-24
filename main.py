@@ -21,8 +21,8 @@ def midiin_callback(event, data=None):
     if message[0] & 0xF0 == NOTE_ON:
         status, note, velocity = message
         channel = (status & 0xF) + 1
-        msg = oscbuilder.OscBuilder(
-            '/midi/noteon', channel, note, velocity).build()
+        msg = oscbuilder.OscBuilder(MODE,
+                                    '/midi/noteon', channel, note, velocity).build()
         s.send(msg)
         print(channel, note, velocity)
 

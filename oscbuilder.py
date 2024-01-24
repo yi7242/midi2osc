@@ -1,8 +1,11 @@
 import struct
 
+from connection_mode import Connection_Mode
+
 
 class OscBuilder:
-    def __init__(self, addr, *args):
+    def __init__(self, mode, addr, *args):
+        self.mode = mode
         self.addr = addr
         self.args = args
 
@@ -44,4 +47,6 @@ class OscBuilder:
                 message += struct.pack(">i", val)
             elif type(val) == float:
                 message += struct.pack(">f", val)
+        if self.mode == Connection_Mode.TCP:
+            message = struct.pack(">i", len(message)) + message
         return message
