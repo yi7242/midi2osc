@@ -8,11 +8,11 @@ PORT = 5005
 s = socket(AF_INET, SOCK_DGRAM)
 # バインドしておく
 s.bind((HOST, PORT))
-
-while True:
-    try:
+s.settimeout(0.2)
+try:
+    while True:
         msg, address = s.recvfrom(8192)
         print(f"message: {msg}\nfrom: {address}")
-    except KeyboardInterrupt:
-        s.close()
-        print('close')
+except KeyboardInterrupt:
+    s.close()
+    print('close')
